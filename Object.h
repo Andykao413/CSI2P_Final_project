@@ -5,8 +5,6 @@
 #include <memory>
 
 
-
-
 class Object
 {
 public:

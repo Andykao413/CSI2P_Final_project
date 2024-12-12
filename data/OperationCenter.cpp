@@ -4,6 +4,9 @@
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../Player.h"
+#include "../Rabbit.h"
+#include "../Plat.h"
+#include <iostream>
 
 void OperationCenter::update() {
 	// Update monsters.
@@ -16,6 +19,8 @@ void OperationCenter::update() {
 	_update_monster_towerBullet();
 	// If any monster reaches the end, hurt the player and delete the monster.
 	_update_monster_player();
+
+	_update_rabbit_plat();
 }
 
 void OperationCenter::_update_monster() {
@@ -82,6 +87,28 @@ void OperationCenter::_update_monster_player() {
 		}
 	}
 }
+
+void OperationCenter::_update_rabbit_plat() {
+	DataCenter *DC = DataCenter::get_instance();
+	std::vector<Tile> tiles = (DC->plat)->get_tiles();
+	int temp = 0;
+	for(Tile t: tiles) {
+		double width = (DC->plat)->get_width(t.len);
+		double left =  (t.x - width/2);
+		double right =  (t.x + width/2);
+		double rabbit_speed = (DC->rabbit)->get_speed_y();
+		double rabbit_x = (DC->rabbit->shape)->center_x();
+		double rabbit_y = (DC->rabbit->shape)->center_y()+90;
+		if(rabbit_speed >= 0 && rabbit_y>=t.y-25 && rabbit_y<=t.y &&  rabbit_x>=left && rabbit_x<= right){
+			(DC->rabbit->shape)->update_center_y(t.y-90);
+			temp = 1;
+		}
+	}
+	(DC->rabbit)->set_steping(temp);
+	std::cout << temp;
+}
+
+
 
 void OperationCenter::draw() {
 	_draw_monster();

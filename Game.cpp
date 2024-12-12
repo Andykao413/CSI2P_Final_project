@@ -16,6 +16,7 @@
 #include <cstring>
 
 #include "Rabbit.h"
+#include "Plat.h"
 // fixed settings
 constexpr char game_icon_img_path[] = "./assets/image/game_icon.png";
 constexpr char game_start_sound_path[] = "./assets/sound/growl.wav";
@@ -135,6 +136,8 @@ Game::game_init() {
 
 	DC->rabbit->init();
 
+	DC->plat->init();
+
 	// game start
 	background = IC->get(background_img_path);
 	debug_log("Game state: change to START\n");
@@ -246,6 +249,7 @@ Game::game_draw() {
 		// user interface
 		if(state != STATE::START) {
 			DC->level->draw();
+			DC->plat->draw();
 			DC->rabbit->draw();
 			ui->draw();
 			OC->draw();

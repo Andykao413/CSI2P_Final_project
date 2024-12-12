@@ -8,6 +8,7 @@
 #include "../shapes/Point.h"
 
 class Player;
+class Plat;
 class Level;
 class Monster;
 class Tower;
@@ -79,6 +80,9 @@ public:
 	 * @see Player
 	 */
 	Player *player;
+
+	
+
 	/**
 	 * @brief Loads and stores the information of a level.
 	 * @see Level
@@ -86,6 +90,8 @@ public:
 	Level *level;
 
 	Rabbit* rabbit;
+
+	Plat *plat;
 
 	/**
 	 * @brief Raw list of Monster objects.
