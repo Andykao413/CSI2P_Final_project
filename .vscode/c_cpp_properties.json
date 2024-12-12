@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}\\**",
+                "${workspaceFolder}\\..\\allegro\\include",
+                "D:/大學/大二上/計算機程式設計/CSI2P-Final-Project-Template/CSI2P-Final-Project-Template/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
+                "D:/大學/大二上/計算機程式設計/CSI2P-Final-Project-Template/CSI2P-Final-Project-Template/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
+                "D:/大學/大二上/計算機程式設計/CSI2P-Final-Project-Template/CSI2P-Final-Project-Template/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
+                "D:/大學/大二上/計算機程式設計/CSI2P-Final-Project-Template/CSI2P-Final-Project-Template/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include",
+                "D:/大學/大二上/計算機程式設計/CSI2P-Final-Project-Template/CSI2P-Final-Project-Template/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
+                "D:/大學/大二上/計算機程式設計/CSI2P-Final-Project-Template/CSI2P-Final-Project-Template/MinGW/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "${workspaceFolder}\\..\\MinGW\\bin\\g++.exe",
+            "compilerArgs": [
+                "-std=c++17",
+                "-Wall",
+                "-Wextra"
+            ]
+        }
+    ],
+    "version": 4
+}
