@@ -16,6 +16,7 @@
 #include <cstring>
 
 #include "Rabbit.h"
+#include "Plat.h"
 #include "Carrot.h"
 // fixed settings
 constexpr char game_icon_img_path[] = "./assets/image/game_icon.png";
@@ -136,8 +137,6 @@ Game::game_init() {
 
 	DC->rabbit->init();
 
-	DC->carrot->init();
-
 	// game start
 	background = IC->get(background_img_path);
 	debug_log("Game state: change to START\n");
@@ -250,6 +249,7 @@ Game::game_draw() {
 		// user interface
 		if(state != STATE::START) {
 			DC->level->draw();
+			DC->plat->draw();
 			DC->rabbit->draw();
 			DC->carrot->draw();
 			ui->draw();

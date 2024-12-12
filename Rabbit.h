@@ -19,11 +19,20 @@ public:
 	void update();
 	void draw();
 
+	double get_speed_y(){
+		return speed_y;
+	}
+
+	void set_steping(int n){
+		steping = n;
+	}
+
 private:
+	int steping;
 	RabbitState state = RabbitState::RIGHT;
     double speed_x = 15;
 	double speed_y;
-	double jump_height = 25;
+	double jump_height = 30;
     std::map<RabbitState, std::string> pngPath;
 	
 };

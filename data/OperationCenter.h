@@ -30,6 +30,8 @@ private:
 	void _update_towerBullet();
 	void _update_monster_towerBullet();
 	void _update_monster_player();
+	void _update_rabbit_plat();
+
 	void _update_rabbit_carrot();
 private:
 	void _draw_monster();

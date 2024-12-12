@@ -6,6 +6,7 @@
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../Rabbit.h"
+#include "../Plat.h"
 #include "../Carrot.h"
 
 
@@ -20,7 +21,7 @@ namespace DataSetting {
 	constexpr int game_field_length = 1080;
 
 	//map constant
-	const double G = 1.2;
+	const double G = 1.5;
 	const int floor_y = 900;
 	const int wall_lx = 100;
 	const int wall_rx = 1820;
@@ -48,6 +49,7 @@ DataCenter::DataCenter() {
 	player = new Player();
 	level = new Level();
 	rabbit = new Rabbit();
+	plat = new Plat();
 	carrot = new Carrot();
 }
 

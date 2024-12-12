@@ -50,13 +50,13 @@ void Rabbit::draw(){
 
 void Rabbit::update(){
     DataCenter *DC = DataCenter::get_instance();
-	if(shape->center_y() < DC->floor_y){
-		speed_y = speed_y + DC->G;
-	}else{
+	if(shape->center_y() >= DC->floor_y || steping==1){
 		speed_y = 0;
+	}else{
+		speed_y = speed_y + DC->G;
 	}
 
-	if((DC->key_state[ALLEGRO_KEY_W] || DC->key_state[ALLEGRO_KEY_SPACE]) && shape->center_y() >= DC->floor_y){
+	if((DC->key_state[ALLEGRO_KEY_W] || DC->key_state[ALLEGRO_KEY_SPACE]) && (shape->center_y() >= DC->floor_y  || steping==1)){
 		speed_y  = speed_y - jump_height;
 
 	}else if(DC->key_state[ALLEGRO_KEY_A] && shape->center_x() >= DC->wall_lx){
