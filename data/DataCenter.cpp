@@ -6,6 +6,7 @@
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../Rabbit.h"
+#include "../Carrot.h"
 
 
 
@@ -47,6 +48,7 @@ DataCenter::DataCenter() {
 	player = new Player();
 	level = new Level();
 	rabbit = new Rabbit();
+	carrot = new Carrot();
 }
 
 DataCenter::~DataCenter() {
@@ -61,4 +63,6 @@ DataCenter::~DataCenter() {
 	for(Bullet *&b : towerBullets) {
 		delete b;
 	}
+	delete rabbit;
+	delete carrot;
 }

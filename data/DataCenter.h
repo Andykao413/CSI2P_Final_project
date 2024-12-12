@@ -13,6 +13,7 @@ class Monster;
 class Tower;
 class Bullet;
 class Rabbit; //avoid cycle include
+class Carrot;
 
 
 /**
@@ -86,6 +87,8 @@ public:
 	Level *level;
 
 	Rabbit* rabbit;
+
+	Carrot* carrot;
 
 	/**
 	 * @brief Raw list of Monster objects.

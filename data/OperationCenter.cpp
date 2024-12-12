@@ -4,6 +4,11 @@
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../Player.h"
+#include "../Rabbit.h"
+#include "../Carrot.h"
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
 
 void OperationCenter::update() {
 	// Update monsters.
@@ -16,6 +21,8 @@ void OperationCenter::update() {
 	_update_monster_towerBullet();
 	// If any monster reaches the end, hurt the player and delete the monster.
 	_update_monster_player();
+
+	_update_rabbit_carrot();
 }
 
 void OperationCenter::_update_monster() {
@@ -60,6 +67,24 @@ void OperationCenter::_update_monster_towerBullet() {
 	}
 }
 
+void OperationCenter::_update_rabbit_carrot(){
+	DataCenter *DC = DataCenter::get_instance();
+	Rabbit* rabbit = DC->rabbit;
+	Carrot* carrot = DC->carrot;
+	Player *&player = DC->player;
+	if(rabbit->shape->overlap(*(carrot->shape))) {
+		player->score++;
+		player->HP++;
+		srand(time(0));
+		int newposid = rand()%3;
+		if(carrot->new_pos[newposid]==carrot->pos){
+			newposid++;
+			newposid%=3;
+		}
+		carrot->pos = carrot->new_pos[newposid];
+	}
+}
+
 void OperationCenter::_update_monster_player() {
 	DataCenter *DC = DataCenter::get_instance();
 	std::vector<Monster*> &monsters = DC->monsters;
@@ -87,6 +112,7 @@ void OperationCenter::draw() {
 	_draw_monster();
 	_draw_tower();
 	_draw_towerBullet();
+	_draw_carrot();
 }
 
 void OperationCenter::_draw_monster() {
@@ -105,4 +131,9 @@ void OperationCenter::_draw_towerBullet() {
 	std::vector<Bullet*> &towerBullets = DataCenter::get_instance()->towerBullets;
 	for(Bullet *towerBullet : towerBullets)
 		towerBullet->draw();
+}
+
+void OperationCenter::_draw_carrot() {
+	Carrot* carrot = DataCenter::get_instance()->carrot;
+	carrot->draw();
 }
