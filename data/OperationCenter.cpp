@@ -2,6 +2,7 @@
 #include "DataCenter.h"
 #include "../monsters/Monster.h"
 #include "../traps/Iron.h"
+#include "../traps/Arrow.h"
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../Player.h"
@@ -18,6 +19,7 @@ void OperationCenter::update() {
 	// Update monsters.
 	_update_monster();
 
+	_update_arrow();
 	_update_iron();
 	// Update towers.
 	_update_tower();
@@ -32,6 +34,8 @@ void OperationCenter::update() {
 	_update_rabbit_plat();
 
 	_update_rabbit_carrot();
+
+	_update_arrow_rabbit();
 }
 
 void OperationCenter::_update_monster() {
@@ -46,6 +50,20 @@ void OperationCenter::_update_iron() {
 	std::vector<Iron*> &irons = DataCenter::get_instance()->irons;
 	for(Iron *iron : irons)
 		iron->update();
+}
+
+void OperationCenter::_update_arrow() {
+	//return ;
+	std::vector<Arrow*> &arrows = DataCenter::get_instance()->arrows;
+	for(Arrow *arrow : arrows)
+		arrow->update();
+
+	for(size_t i = 0; i < arrows.size(); ++i) {
+		if(arrows[i]->shape->center_y() > DataCenter::get_instance()->floor_y) {
+			arrows.erase(arrows.begin()+i);
+			--i;
+		}
+	}
 }
 
 void OperationCenter::_update_tower() {
@@ -114,6 +132,18 @@ void OperationCenter::_update_iron_rabbit() {
 	}
 }
 
+void OperationCenter::_update_arrow_rabbit() {
+	DataCenter *DC = DataCenter::get_instance();
+	std::vector<Arrow*> &arrows = DC->arrows;
+	Player *&player = DC->player;
+	Rabbit *&rabbit = DC->rabbit;
+	for(size_t i = 0; i < arrows.size(); ++i) {
+		if(arrows[i]->shape->overlap(*(rabbit->shape))) {
+			player->HP = 0;
+		}
+	}
+}
+
 void OperationCenter::_update_rabbit_plat() {
 	DataCenter *DC = DataCenter::get_instance();
 	std::vector<Tile> tiles = (DC->plat)->get_tiles();
@@ -143,6 +173,7 @@ void OperationCenter::draw() {
 	_draw_towerBullet();
 	_draw_carrot();
 	_draw_iron();
+	_draw_arrow();
 }
 
 void OperationCenter::_draw_monster() {
@@ -156,6 +187,13 @@ void OperationCenter::_draw_iron() {
 	std::vector<Iron*> &irons = DataCenter::get_instance()->irons;
 	for(Iron *iron : irons)
 		iron->draw();
+}
+
+void OperationCenter::_draw_arrow() {
+	//return ;
+	std::vector<Arrow*> &arrows = DataCenter::get_instance()->arrows;
+	for(Arrow *arrow : arrows)
+		arrow->draw();
 }
 
 void OperationCenter::_draw_tower() {

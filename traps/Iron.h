@@ -27,7 +27,7 @@ private:
     double speed_x;
 	double speed_y;
     std::string pngPath;
-	
+
 };
 
 

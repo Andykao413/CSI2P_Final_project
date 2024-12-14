@@ -2,6 +2,7 @@
 #include <string>
 #include "Utils.h"
 #include "traps/Iron.h"
+#include "traps/Arrow.h"
 #include "data/DataCenter.h"
 #include <allegro5/allegro_primitives.h>
 #include "shapes/Point.h"
@@ -25,6 +26,8 @@
 void TrapCenter::init() {
     trap_num = 0;
     trap_time = 5;
+    same = 0;
+    lasttrap = -1;
 	return ;
 }
 
@@ -45,10 +48,31 @@ TrapCenter::update() {
 
     
     if(now_time > 0 && now_time % trap_time==0 && trap_num < now_time/trap_time){
-        //以下random不同的case，依據case生出不同陷阱 
-        DC->irons.emplace_back(Iron::createIron());
+        srand(time(0));
+        int rnum = rand()%int(TrapType::TrapType_MAX);
+        if(rnum == lasttrap){
+            if(same == 1){
+                rnum++;
+                rnum%=int(TrapType::TrapType_MAX);
+                same = 0;
+            }
+            else same++;
+        }
+        //以下random不同的case，依據case生出不同陷阱
+        switch(rnum){
+            case(0):
+                DC->irons.emplace_back(Iron::createIron());
+                break;
+            case(1):
+                DC->arrows.emplace_back(Arrow::createArrow());
+                break;
+            default:
+                DC->arrows.emplace_back(Arrow::createArrow());
+                break;
+        }
         //以上random不同的case，依據case生出不同陷阱 
         trap_num++;
+        lasttrap = rnum;
     }
 
 }
