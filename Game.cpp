@@ -14,9 +14,13 @@
 #include <allegro5/allegro_acodec.h>
 #include <vector>
 #include <cstring>
-
+#include <iostream>
+#include <ctime>
+#include "traps/Iron.h"
 #include "Rabbit.h"
+#include "TrapCenter.h"
 #include "Plat.h"
+#include "Carrot.h"
 // fixed settings
 constexpr char game_icon_img_path[] = "./assets/image/game_icon.png";
 constexpr char game_start_sound_path[] = "./assets/sound/growl.wav";
@@ -137,7 +141,14 @@ Game::game_init() {
 	DC->rabbit->init();
 
 	DC->plat->init();
+	DC->trapcenter->init();
 
+	DC->carrot->init();
+
+	//DC->iron->init();
+
+	DC->start_time =  std::time(nullptr);
+	std::cout << "iron inited\n";
 	// game start
 	background = IC->get(background_img_path);
 	debug_log("Game state: change to START\n");
@@ -185,10 +196,10 @@ Game::game_update() {
 				debug_log("<Game> state: change to PAUSE\n");
 				state = STATE::PAUSE;
 			}
-			if(DC->level->remain_monsters() == 0 && DC->monsters.size() == 0) {
-				debug_log("<Game> state: change to END\n");
-				state = STATE::END;
-			}
+			// if(DC->level->remain_monsters() == 0 && DC->monsters.size() == 0) {
+			// 	debug_log("<Game> state: change to END\n");
+			// 	state = STATE::END;
+			// }
 			if(DC->player->HP == 0) {
 				debug_log("<Game> state: change to END\n");
 				state = STATE::END;
@@ -211,8 +222,12 @@ Game::game_update() {
 		SC->update();
 		ui->update();
 		DC->rabbit->update();
+		DC->carrot->update();
 		if(state != STATE::START) {
 			DC->level->update();
+			DC->trapcenter->update();
+			//DC->iron->update();
+			//std::cout << "iron updateed\n";
 			OC->update();
 		}
 	}
@@ -251,6 +266,9 @@ Game::game_draw() {
 			DC->level->draw();
 			DC->plat->draw();
 			DC->rabbit->draw();
+			DC->carrot->draw();
+			//DC->iron->draw();
+			//std::cout << "iron draw\n";
 			ui->draw();
 			OC->draw();
 		}

@@ -8,6 +8,7 @@ public:
 	void update();
 	int HP;
 	int coin;
+	int score;
 private:
 	int coin_freq;
 	int coin_increase;

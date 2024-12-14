@@ -26,16 +26,21 @@ private:
 	OperationCenter() {}
 private:
 	void _update_monster();
+	void _update_iron();
 	void _update_tower();
 	void _update_towerBullet();
 	void _update_monster_towerBullet();
+	void _update_iron_rabbit();
 	void _update_monster_player();
 	void _update_rabbit_plat();
 
+	void _update_rabbit_carrot();
 private:
 	void _draw_monster();
 	void _draw_tower();
 	void _draw_towerBullet();
+	void _draw_carrot();
+	void _draw_iron();
 };
 
 #endif

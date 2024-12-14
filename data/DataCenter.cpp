@@ -3,11 +3,15 @@
 #include "../Level.h"
 #include "../Player.h"
 #include "../monsters/Monster.h"
+#include "../traps/Iron.h"
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../Rabbit.h"
 #include "../Plat.h"
-
+#include "../Carrot.h"
+#include "../TrapCenter.h"
+#include "../traps/Iron.h"
+#include <ctime>
 
 
 
@@ -21,10 +25,11 @@ namespace DataSetting {
 
 	//map constant
 	const double G = 1.5;
+	const int sky_y = 0;
 	const int floor_y = 900;
 	const int wall_lx = 100;
 	const int wall_rx = 1820;
-
+	std::time_t start_time; //since 1970
 
 }
 
@@ -35,9 +40,11 @@ DataCenter::DataCenter() {
 	this->game_field_length = DataSetting::game_field_length;
 
 	this->G = DataSetting::G;
+	this->sky_y = DataSetting::sky_y;
 	this->floor_y = DataSetting::floor_y;
 	this->wall_lx = DataSetting::wall_lx;
 	this->wall_rx = DataSetting::wall_rx;
+	this->start_time = DataSetting::start_time;
 
 
 	memset(key_state, false, sizeof(key_state));
@@ -47,8 +54,11 @@ DataCenter::DataCenter() {
 	memset(prev_mouse_state, false, sizeof(prev_mouse_state));
 	player = new Player();
 	level = new Level();
+	trapcenter = new TrapCenter();
 	rabbit = new Rabbit();
 	plat = new Plat();
+	carrot = new Carrot();
+	//iron = new Iron();
 }
 
 DataCenter::~DataCenter() {
@@ -63,4 +73,10 @@ DataCenter::~DataCenter() {
 	for(Bullet *&b : towerBullets) {
 		delete b;
 	}
+	for(Iron *&b : irons) {
+		delete b;
+	}
+	delete rabbit;
+	delete carrot;
+	delete plat;
 }

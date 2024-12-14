@@ -6,7 +6,7 @@
 #include <allegro5/keycodes.h>
 #include <allegro5/mouse.h>
 #include "../shapes/Point.h"
-
+#include <ctime>
 class Player;
 class Plat;
 class Level;
@@ -14,7 +14,9 @@ class Monster;
 class Tower;
 class Bullet;
 class Rabbit; //avoid cycle include
-
+class Carrot;
+class Iron;
+class TrapCenter;
 
 /**
  * @brief Stores generic global data and relatively small data structures.
@@ -32,9 +34,11 @@ public:
 	~DataCenter();
 public:
 	double G;
+	int sky_y;
 	int floor_y;
 	int wall_lx;
 	int wall_rx;
+	std::time_t start_time;
 
 	double FPS;
 	int window_width, window_height;
@@ -89,10 +93,15 @@ public:
 	 */
 	Level *level;
 
+	TrapCenter* trapcenter;
+
 	Rabbit* rabbit;
+
+	Carrot* carrot;
 
 	Plat *plat;
 
+	Iron *iron;
 	/**
 	 * @brief Raw list of Monster objects.
 	 * @see Monster
@@ -108,6 +117,8 @@ public:
 	 * @see Bullet
 	 */
 	std::vector<Bullet*> towerBullets;
+
+	std::vector<Iron*> irons;
 
 
 private:
