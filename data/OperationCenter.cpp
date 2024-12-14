@@ -93,7 +93,7 @@ void OperationCenter::_update_rabbit_carrot(){
 		player->score++;
 		player->HP++;
 		srand(time(0));
-		int newposid = rand()%3;
+		int newposid = rand()%9;
 		if(carrot->new_pos[newposid]==carrot->pos){
 			newposid++;
 			newposid%=3;
@@ -126,7 +126,7 @@ void OperationCenter::_update_rabbit_plat() {
 		double rabbit_speed = (DC->rabbit)->get_speed_y();
 		double rabbit_x = (DC->rabbit->shape)->center_x();
 		double rabbit_y = (DC->rabbit->shape)->center_y()+90;
-		if(rabbit_speed >= 0 && rabbit_y>=t.y-25 && rabbit_y<=t.y &&  rabbit_x>=left && rabbit_x<= right){
+		if(rabbit_speed >= 0 && rabbit_y>=t.y-25 && rabbit_y<=t.y &&  rabbit_x>=left && rabbit_x<= right  && !DC->key_state[ALLEGRO_KEY_S]){
 			(DC->rabbit->shape)->update_center_y(t.y-90);
 			temp = 1;
 		}

@@ -80,7 +80,7 @@ Iron::Iron(){
     int randomNumber = rand() % 7 + 1; 
 	//hitbox
 	shape.reset();
-	shape.reset(new Circle{DC->window_width/8*randomNumber, DC->window_height + al_get_bitmap_height(img)/2, al_get_bitmap_width(img)});
+	shape.reset(new Circle{DC->window_width/8*randomNumber, DC->window_height + al_get_bitmap_height(img)/5, al_get_bitmap_width(img)/5});
 	//Rectangle:左上到右下的座標
     
 
