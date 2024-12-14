@@ -81,10 +81,10 @@ void OperationCenter::_update_rabbit_carrot(){
 		player->score++;
 		player->HP++;
 		srand(time(0));
-		int newposid = rand()%3;
+		int newposid = rand()%9;
 		if(carrot->new_pos[newposid]==carrot->pos){
 			newposid++;
-			newposid%=3;
+			newposid%=9;
 		}
 		carrot->pos = carrot->new_pos[newposid];
 	}
@@ -130,7 +130,6 @@ void OperationCenter::_update_rabbit_plat() {
 		}
 	}
 	(DC->rabbit)->set_steping(temp);
-	std::cout << temp;
 }
 
 

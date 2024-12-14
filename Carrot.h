@@ -18,8 +18,8 @@ public:
 	void update();
 	void draw();
     std::pair<double,double> pos;
-    const std::pair<double,double> new_pos[3] = {
-        {90,700},{250,800},{500,600}
+    const std::pair<double,double> new_pos[10] = {
+        {500,650},{870,650},{1050,650},{550,390},{650,390},{750,390},{500,120},{870,920},{1050,920}
     };
 private:
 	CarrotState state = CarrotState::EXIST;
