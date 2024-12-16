@@ -3,6 +3,7 @@
 #include "../monsters/Monster.h"
 #include "../traps/Iron.h"
 #include "../traps/Arrow.h"
+#include "../traps/Fort.h"
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../Player.h"
@@ -36,6 +37,8 @@ void OperationCenter::update() {
 	_update_rabbit_carrot();
 
 	_update_arrow_rabbit();
+
+	_update_fort();
 }
 
 void OperationCenter::_update_monster() {
@@ -70,6 +73,12 @@ void OperationCenter::_update_tower() {
 	std::vector<Tower*> &towers = DataCenter::get_instance()->towers;
 	for(Tower *tower : towers)
 		tower->update();
+}
+
+void OperationCenter::_update_fort() {
+	std::vector<Fort*> &forts = DataCenter::get_instance()->forts;
+	for(Fort *fort : forts)
+		fort->update();
 }
 
 void OperationCenter::_update_towerBullet() {
@@ -174,6 +183,7 @@ void OperationCenter::draw() {
 	_draw_carrot();
 	_draw_iron();
 	_draw_arrow();
+	_draw_fort();
 }
 
 void OperationCenter::_draw_monster() {
@@ -211,4 +221,10 @@ void OperationCenter::_draw_towerBullet() {
 void OperationCenter::_draw_carrot() {
 	Carrot* carrot = DataCenter::get_instance()->carrot;
 	carrot->draw();
+}
+
+void OperationCenter::_draw_fort() {
+	std::vector<Fort*> &forts = DataCenter::get_instance()->forts;
+	for(Fort *fort : forts)
+		fort->draw();
 }

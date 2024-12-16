@@ -15,6 +15,7 @@
 enum class TrapType {
     IRON,
 	Arrow,
+	//FORT,
 	TrapType_MAX
 };
 

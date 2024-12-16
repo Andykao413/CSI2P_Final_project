@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "traps/Iron.h"
 #include "traps/Arrow.h"
+#include "traps/Fort.h"
 #include "data/DataCenter.h"
 #include <allegro5/allegro_primitives.h>
 #include "shapes/Point.h"
@@ -62,6 +63,7 @@ TrapCenter::update() {
         switch(rnum){
             case(0):
                 DC->irons.emplace_back(Iron::createIron());
+                DC->forts.emplace_back(Fort::createFort());
                 break;
             case(1):
                 DC->arrows.emplace_back(Arrow::createArrow());
@@ -70,10 +72,10 @@ TrapCenter::update() {
                 DC->arrows.emplace_back(Arrow::createArrow());
                 break;
         }
+        
         //以上random不同的case，依據case生出不同陷阱 
         trap_num++;
         lasttrap = rnum;
     }
-
 }
 

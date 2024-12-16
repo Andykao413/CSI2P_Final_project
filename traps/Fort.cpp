@@ -16,9 +16,9 @@
 
 typedef unsigned long long size_t;
 
-namespace RabbitSetting {
+namespace FortSetting {
     
-	static constexpr char rabbit_imgs_root_path[40] = {
+	static constexpr char fort_imgs_root_path[40] = {
 		"./assets/image",
 	};
 	static constexpr char pic_postfix[2][10] = {
@@ -31,18 +31,33 @@ Fort* Fort::createFort(){
 }
 
 Fort::Fort(){
+    srand(time(0));
+	int randnum = rand()%2;
+	
+	if(randnum){
+		char buffer[50] = "./assets/image/trap/Fort_right.png";
+		pngPath = buffer;
+	}
+	else{
+		char buffer[50] = "./assets/image/trap/Fort_left.png";
+		pngPath = buffer;
+	}
+    //char buffer[50] = "./assets/image/trap/Fort.png";
     
-    char buffer[50] = "./assets/image/trap/Fort.png";
-    pngPath = buffer;
     
 	DataCenter *DC = DataCenter::get_instance();
     //gifcenter VS imagecenter
 	ImageCenter *IMG = ImageCenter::get_instance();
 	ALLEGRO_BITMAP *img = IMG->get(pngPath);
+
+	
 	
 	//hitbox
 	shape.reset();
-	shape.reset(new Circle{DC->window_width, DC->window_height + al_get_bitmap_height(img)/5, al_get_bitmap_width(img)/5});
+	if(randnum)
+		shape.reset(new Rectangle{DC->wall_rx, DC->window_height/2, DC->wall_rx + al_get_bitmap_width(img), DC->window_height/2 + al_get_bitmap_height(img)});
+	else
+		shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img), DC->window_height/2, DC->wall_lx, DC->window_height/2 + al_get_bitmap_height(img)});
 	//Rectangle:左上到右下的座標
 
     counter = 0;
@@ -70,6 +85,6 @@ void Fort::draw(){
 
 void Fort::update(){
     //DataCenter *DC = DataCenter::get_instance();
-    if(counter) counter--;
+    //if(counter) counter--;
 }
 

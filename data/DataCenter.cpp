@@ -12,6 +12,8 @@
 #include "../TrapCenter.h"
 #include "../traps/Iron.h"
 #include "../traps/Arrow.h"
+#include "../traps/Fort.h"
+#include "../traps/Fortbullet.h"
 #include <ctime>
 
 
@@ -78,6 +80,12 @@ DataCenter::~DataCenter() {
 		delete b;
 	}
 	for(Arrow *&b : arrows) {
+		delete b;
+	}
+	for(Fort *&b : forts) {
+		delete b;
+	}
+	for(Fortbullet *&b : fortbullets) {
 		delete b;
 	}
 	delete rabbit;
