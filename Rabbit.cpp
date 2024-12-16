@@ -18,6 +18,9 @@ namespace RabbitSetting {
 	};
 }
 
+
+
+
 void Rabbit::init(){
     for(size_t type=0; type < static_cast<size_t>(RabbitState::RABBITSTATE_MAX); ++type){
         char buffer[50];

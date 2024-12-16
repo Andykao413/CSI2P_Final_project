@@ -18,6 +18,7 @@ class Carrot;
 class Iron;
 class TrapCenter;
 class Arrow;
+class Wheel;
 
 /**
  * @brief Stores generic global data and relatively small data structures.
@@ -124,6 +125,8 @@ public:
 	std::vector<Iron*> irons;
 
 	std::vector<Arrow*> arrows;
+
+	std::vector<Wheel*> wheels;
 
 
 private:

@@ -11,6 +11,7 @@
 #include "../Carrot.h"
 #include "../TrapCenter.h"
 #include "../traps/Iron.h"
+#include "../traps/Wheel.h"
 #include "../traps/Arrow.h"
 #include <ctime>
 
@@ -28,8 +29,8 @@ namespace DataSetting {
 	const double G = 1.5;
 	const int sky_y = 0;
 	const int floor_y = 900;
-	const int wall_lx = 100;
-	const int wall_rx = 1820;
+	const int wall_lx = 200;
+	const int wall_rx = 1740;
 	std::time_t start_time; //since 1970
 
 }

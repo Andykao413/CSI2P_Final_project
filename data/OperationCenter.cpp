@@ -5,6 +5,7 @@
 #include "../traps/Arrow.h"
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
+#include "../traps/Wheel.h"
 #include "../Player.h"
 #include "../Rabbit.h"
 #include "../Plat.h"
@@ -21,6 +22,7 @@ void OperationCenter::update() {
 
 	_update_arrow();
 	_update_iron();
+	_update_wheel();
 	// Update towers.
 	_update_tower();
 	// Update tower bullets.
@@ -36,6 +38,8 @@ void OperationCenter::update() {
 	_update_rabbit_carrot();
 
 	_update_arrow_rabbit();
+
+	_update_wheel_rabbit();
 }
 
 void OperationCenter::_update_monster() {
@@ -51,6 +55,14 @@ void OperationCenter::_update_iron() {
 	for(Iron *iron : irons)
 		iron->update();
 }
+
+void OperationCenter::_update_wheel() {
+	//return ;
+	std::vector<Wheel*> &wheels = DataCenter::get_instance()->wheels;
+	for(Wheel *wheel : wheels)
+		wheel->update();
+}
+
 
 void OperationCenter::_update_arrow() {
 	//return ;
@@ -132,6 +144,20 @@ void OperationCenter::_update_iron_rabbit() {
 	}
 }
 
+
+void OperationCenter::_update_wheel_rabbit() {
+	DataCenter *DC = DataCenter::get_instance();
+	std::vector<Wheel*> &wheels = DC->wheels;
+	Player *&player = DC->player;
+	Rabbit *&rabbit = DC->rabbit;
+	for(size_t i = 0; i < wheels.size(); ++i) {
+		if(wheels[i]->shape->overlap(*(rabbit->shape))) {
+			player->HP = 0;
+		}
+	}
+}
+
+
 void OperationCenter::_update_arrow_rabbit() {
 	DataCenter *DC = DataCenter::get_instance();
 	std::vector<Arrow*> &arrows = DC->arrows;
@@ -174,6 +200,7 @@ void OperationCenter::draw() {
 	_draw_carrot();
 	_draw_iron();
 	_draw_arrow();
+	_draw_wheel();
 }
 
 void OperationCenter::_draw_monster() {
@@ -188,6 +215,15 @@ void OperationCenter::_draw_iron() {
 	for(Iron *iron : irons)
 		iron->draw();
 }
+
+
+void OperationCenter::_draw_wheel() {
+	//return ;
+	std::vector<Wheel*> &wheels = DataCenter::get_instance()->wheels;
+	for(Wheel *wheel : wheels)
+		wheel->draw();
+}
+
 
 void OperationCenter::_draw_arrow() {
 	//return ;

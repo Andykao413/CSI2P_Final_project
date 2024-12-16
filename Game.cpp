@@ -139,7 +139,12 @@ Game::game_init() {
 	ui->init();
 
 	//DC->level->init();
+	DC->rabbit->init();
 
+	DC->plat->init();
+	DC->trapcenter->init();
+
+	DC->carrot->init();
 	
 
 	//DC->iron->init();
@@ -178,27 +183,23 @@ Game::game_update() {
 				//DC->level->load_level(1);
 				is_played = true;
 			}
-
+			
+			//debug_log("<Game> state: change to START\n");
 			static bool BGM_played = false;
 			if(!BGM_played) {
 				background = SC->play(background_sound_path, ALLEGRO_PLAYMODE_LOOP);
 				BGM_played = true;
 			}
-
-			if(!SC->is_playing(instance) && DC->key_state[ALLEGRO_KEY_SPACE] && !DC->prev_key_state[ALLEGRO_KEY_SPACE]) { //changed
+			//debug_log("<Game> state: change to start2\n");
+			if(DC->key_state[ALLEGRO_KEY_SPACE] && !DC->prev_key_state[ALLEGRO_KEY_SPACE]) {    //changed  //!SC->is_playing(instance) && DC->key_state[ALLEGRO_KEY_SPACE] && !DC->prev_key_state[ALLEGRO_KEY_SPACE]
+				debug_log("<Game> state: init start\n");
 				DC->start_time =  std::time(nullptr);
-				DC->rabbit->init();
-
-				DC->plat->init();
-				DC->trapcenter->init();
-
-				DC->carrot->init();
+			
 				debug_log("<Game> state: change to LEVEL\n");
 				state = STATE::LEVEL;
 			}
 			break;
 		} case STATE::LEVEL: {
-			
 
 			if(DC->key_state[ALLEGRO_KEY_P] && !DC->prev_key_state[ALLEGRO_KEY_P]) {
 				SC->toggle_playing(background);
@@ -212,6 +213,13 @@ Game::game_update() {
 			if(DC->player->HP == 0) {
 				debug_log("<Game> state: change to END\n");
 				//reset game
+				DC->irons = std::vector<Iron*>(0); 
+				DC->arrows = std::vector<Arrow*>(0); 
+				DC->wheels = std::vector<Wheel*>(0); 
+				DC->rabbit->init();
+				DC->plat->init();
+				DC->carrot->init();
+				DC->trapcenter->init();
 				DC->player->HP = 3;
 
 				state = STATE::END;
@@ -235,10 +243,11 @@ Game::game_update() {
 	}
 	// If the game is not paused, we should progress update.
 	if(state != STATE::PAUSE) {
-		DC->player->update();
+		
 		SC->update();
 		ui->update();
-		if(state != STATE::START) {
+		if(state == STATE::LEVEL) {
+			DC->player->update();
 			DC->rabbit->update();
 			DC->carrot->update();
 			//DC->level->update();

@@ -29,6 +29,7 @@ private:
 	void _update_iron();
 	void _update_arrow();
 	void _update_tower();
+	void _update_wheel();
 	void _update_towerBullet();
 	void _update_monster_towerBullet();
 	void _update_iron_rabbit();
@@ -37,6 +38,7 @@ private:
 	void _update_rabbit_plat();
 
 	void _update_rabbit_carrot();
+	void _update_wheel_rabbit();
 private:
 	void _draw_monster();
 	void _draw_tower();
@@ -44,6 +46,7 @@ private:
 	void _draw_carrot();
 	void _draw_iron();
 	void _draw_arrow();
+	void _draw_wheel();
 };
 
 #endif
