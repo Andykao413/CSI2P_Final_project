@@ -25,6 +25,8 @@
 constexpr char game_icon_img_path[] = "./assets/image/game_icon.png";
 constexpr char game_start_sound_path[] = "./assets/sound/growl.wav";
 constexpr char background_img_path[] = "./assets/image/back.png";
+constexpr char background_start_img_path[] = "./assets/image/back_start.jpg";
+constexpr char background_end_img_path[] = "./assets/image/back_end.jpg";
 constexpr char background_sound_path[] = "./assets/sound/background.ogg";
 
 /**
@@ -136,21 +138,23 @@ Game::game_init() {
 	ui = new UI();
 	ui->init();
 
-	DC->level->init();
-
+	//DC->level->init();
 	DC->rabbit->init();
 
 	DC->plat->init();
 	DC->trapcenter->init();
 
 	DC->carrot->init();
+	
 
 	//DC->iron->init();
 
-	DC->start_time =  std::time(nullptr);
+	
 	std::cout << "iron inited\n";
 	// game start
 	background = IC->get(background_img_path);
+	background_start = IC->get(background_start_img_path);
+	background_end = IC->get(background_end_img_path);
 	debug_log("Game state: change to START\n");
 	state = STATE::START;
 	al_start_timer(timer);
@@ -175,21 +179,27 @@ Game::game_update() {
 			static ALLEGRO_SAMPLE_INSTANCE *instance = nullptr;
 			if(!is_played) {
 				instance = SC->play(game_start_sound_path, ALLEGRO_PLAYMODE_ONCE);
-				DC->level->load_level(1);
+				//instance = SC->play("", ALLEGRO_PLAYMODE_ONCE);
+				//DC->level->load_level(1);
 				is_played = true;
 			}
-
-			if(!SC->is_playing(instance)) {
-				debug_log("<Game> state: change to LEVEL\n");
-				state = STATE::LEVEL;
-			}
-			break;
-		} case STATE::LEVEL: {
+			
+			//debug_log("<Game> state: change to START\n");
 			static bool BGM_played = false;
 			if(!BGM_played) {
 				background = SC->play(background_sound_path, ALLEGRO_PLAYMODE_LOOP);
 				BGM_played = true;
 			}
+			//debug_log("<Game> state: change to start2\n");
+			if(DC->key_state[ALLEGRO_KEY_SPACE] && !DC->prev_key_state[ALLEGRO_KEY_SPACE]) {    //changed  //!SC->is_playing(instance) && DC->key_state[ALLEGRO_KEY_SPACE] && !DC->prev_key_state[ALLEGRO_KEY_SPACE]
+				debug_log("<Game> state: init start\n");
+				DC->start_time =  std::time(nullptr);
+			
+				debug_log("<Game> state: change to LEVEL\n");
+				state = STATE::LEVEL;
+			}
+			break;
+		} case STATE::LEVEL: {
 
 			if(DC->key_state[ALLEGRO_KEY_P] && !DC->prev_key_state[ALLEGRO_KEY_P]) {
 				SC->toggle_playing(background);
@@ -202,6 +212,16 @@ Game::game_update() {
 			// }
 			if(DC->player->HP == 0) {
 				debug_log("<Game> state: change to END\n");
+				//reset game
+				DC->irons = std::vector<Iron*>(0); 
+				DC->arrows = std::vector<Arrow*>(0); 
+				DC->wheels = std::vector<Wheel*>(0); 
+				DC->rabbit->init();
+				DC->plat->init();
+				DC->carrot->init();
+				DC->trapcenter->init();
+				DC->player->HP = 3;
+
 				state = STATE::END;
 			}
 			break;
@@ -213,18 +233,24 @@ Game::game_update() {
 			}
 			break;
 		} case STATE::END: {
-			return false;
+			if(DC->key_state[ALLEGRO_KEY_SPACE] && !DC->prev_key_state[ALLEGRO_KEY_SPACE]) { //changed
+				debug_log("<Game> state: change to Start\n");
+				state = STATE::START;
+			}
+			break;
+			//return false;
 		}
 	}
 	// If the game is not paused, we should progress update.
 	if(state != STATE::PAUSE) {
-		DC->player->update();
+		
 		SC->update();
 		ui->update();
-		DC->rabbit->update();
-		DC->carrot->update();
-		if(state != STATE::START) {
-			DC->level->update();
+		if(state == STATE::LEVEL) {
+			DC->player->update();
+			DC->rabbit->update();
+			DC->carrot->update();
+			//DC->level->update();
 			DC->trapcenter->update();
 			//DC->iron->update();
 			//std::cout << "iron updateed\n";
@@ -250,7 +276,12 @@ Game::game_draw() {
 	al_clear_to_color(al_map_rgb(100, 100, 100));
 	if(state != STATE::END) {
 		// background
-		al_draw_bitmap(background, 0, 0, 0);
+		if(state == STATE::START){
+			al_draw_bitmap(background_start, 0, 0, 0);
+		}else{
+			al_draw_bitmap(background, 0, 0, 0);
+		}
+		
 		// if(DC->game_field_length < DC->window_width)
 		// 	al_draw_filled_rectangle(
 		// 		DC->game_field_length, 0,
@@ -263,7 +294,7 @@ Game::game_draw() {
 		// 		al_map_rgb(100, 100, 100));
 		// user interface
 		if(state != STATE::START) {
-			DC->level->draw();
+			//DC->level->draw();
 			DC->plat->draw();
 			DC->rabbit->draw();
 			DC->carrot->draw();
@@ -272,6 +303,8 @@ Game::game_draw() {
 			ui->draw();
 			OC->draw();
 		}
+	}else{
+		al_draw_bitmap(background_end, 0, 0, 0);
 	}
 	switch(state) {
 		case STATE::START: {

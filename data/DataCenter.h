@@ -20,6 +20,7 @@ class TrapCenter;
 class Arrow;
 class Fort;
 class Fortbullet;
+class Wheel;
 
 /**
  * @brief Stores generic global data and relatively small data structures.
@@ -127,6 +128,7 @@ public:
 	std::vector<Fort*> forts;
 
 	std::vector<Fortbullet*> fortbullets;
+	std::vector<Wheel*> wheels;
 
 
 private:

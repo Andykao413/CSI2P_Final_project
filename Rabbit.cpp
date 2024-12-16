@@ -18,6 +18,9 @@ namespace RabbitSetting {
 	};
 }
 
+
+
+
 void Rabbit::init(){
     for(size_t type=0; type < static_cast<size_t>(RabbitState::RABBITSTATE_MAX); ++type){
         char buffer[50];
@@ -35,6 +38,7 @@ void Rabbit::init(){
 	//hitbox
 	shape.reset();
 	shape.reset(new Rectangle{DC->window_width/2., DC->window_height/2., DC->window_width/2 + al_get_bitmap_width(img)/3., DC->window_height/2 + al_get_bitmap_height(img)*0.5});
+	//shape.reset(new Rectangle{DC->window_width/2.0, DC->window_height/2.0, DC->window_width/2.0 + al_get_bitmap_width(img), DC->window_height/2.0 + al_get_bitmap_height(img)});
 	//Rectangle:左上到右下的座標
 
 }

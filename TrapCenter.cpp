@@ -4,6 +4,7 @@
 #include "traps/Iron.h"
 #include "traps/Arrow.h"
 #include "traps/Fort.h"
+#include "traps/Wheel.h"
 #include "data/DataCenter.h"
 #include <allegro5/allegro_primitives.h>
 #include "shapes/Point.h"
@@ -41,12 +42,16 @@ void TrapCenter::init() {
 */
 void
 TrapCenter::update() {
+    static int prev_time = 0;
     DataCenter *DC = DataCenter::get_instance();
     
     std::time_t end_time = std::time(nullptr); // 紀錄結束時間
     int now_time = std::difftime(end_time, DC->start_time);
     //std::cout << DC->start_time << ", " << end_time << ", " <<now_time << "\n";
-
+    if(prev_time != now_time){
+        prev_time = now_time;
+        std::cout << "now second:" << now_time << "\n";
+    }
     
     if(now_time > 0 && now_time % trap_time==0 && trap_num < now_time/trap_time){
         srand(time(0));
@@ -60,6 +65,7 @@ TrapCenter::update() {
             else same++;
         }
         //以下random不同的case，依據case生出不同陷阱
+        //rnum = 2;
         switch(rnum){
             case(0):
                 DC->irons.emplace_back(Iron::createIron());
@@ -68,6 +74,8 @@ TrapCenter::update() {
             case(1):
                 DC->arrows.emplace_back(Arrow::createArrow());
                 break;
+            case(2):
+                DC->wheels.emplace_back(Wheel::createWheel());
             default:
                 DC->arrows.emplace_back(Arrow::createArrow());
                 break;
