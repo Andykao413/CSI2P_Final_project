@@ -20,9 +20,6 @@ constexpr int tower_img_top_padding = 30;
 
 void
 UI::init() {
-	DataCenter *DC = DataCenter::get_instance();
-	std::time_t end_time = std::time(nullptr); // 紀錄結束時間
-    int now_time = std::difftime(end_time, DC->start_time);
 	/*DataCenter *DC = DataCenter::get_instance();
 	ImageCenter *IC = ImageCenter::get_instance();
 	love = IC->get(love_img_path);
@@ -133,8 +130,6 @@ UI::draw() {
 	DataCenter *DC = DataCenter::get_instance();
 	FontCenter *FC = FontCenter::get_instance();
 	//const Point &mouse = DC->mouse;
-	/// draw HP
-	const int &game_field_length = DC->game_field_length;
 	std::time_t end_time = std::time(nullptr); // 紀錄結束時間
     int now_time = std::difftime(end_time, DC->start_time);
 	/*const int &player_HP = DC->player->HP;
@@ -146,7 +141,7 @@ UI::draw() {
 	const int &player_score = DC->player->score;
 	al_draw_textf(
 		FC->courier_new[FontSize::LARGE], al_map_rgb(0, 0, 0),
-		game_field_length, love_img_padding,
+		DC->window_width/2 - 50, love_img_padding,
 		ALLEGRO_ALIGN_LEFT, "TIME: %d     SCORE: %d",now_time ,player_score);
 	/*// draw tower shop items
 	for(auto &[bitmap, p, price] : tower_items) {

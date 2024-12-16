@@ -143,10 +143,10 @@ void OperationCenter::_update_rabbit_carrot(){
 		player->score++;
 		player->HP++;
 		srand(time(0));
-		int newposid = rand()%9;
+		int newposid = rand()%carrot->posnum;
 		if(carrot->new_pos[newposid]==carrot->pos){
-			newposid++;
-			newposid%=3;
+			newposid+=5;
+			newposid%=carrot->posnum;
 		}
 		carrot->pos = carrot->new_pos[newposid];
 	}

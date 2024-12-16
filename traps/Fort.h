@@ -29,7 +29,7 @@ public:
 	}
 
 private:
-    const int attack_freq = 300;
+    int attack_freq = 300;
 	int counter;
     std::string pngPath;
 };

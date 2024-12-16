@@ -70,17 +70,21 @@ TrapCenter::update() {
         switch(rnum){
             case(0):
                 DC->irons.emplace_back(Iron::createIron());
-                DC->forts.emplace_back(Fort::createFort());
                 break;
             case(1):
                 DC->arrows.emplace_back(Arrow::createArrow());
                 break;
             case(2):
                 DC->wheels.emplace_back(Wheel::createWheel());
+                break;
+            case(3):
+                DC->forts.emplace_back(Fort::createFort());
+                break;
             default:
                 DC->arrows.emplace_back(Arrow::createArrow());
                 break;
         }
+        DC->arrows.emplace_back(Arrow::createArrow());
         
         //以上random不同的case，依據case生出不同陷阱 
         trap_num++;

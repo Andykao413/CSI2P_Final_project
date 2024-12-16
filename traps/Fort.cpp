@@ -32,9 +32,9 @@ Fort* Fort::createFort(){
 
 Fort::Fort(){
     srand(time(0));
-	int randnum = rand()%2;
+	int randnum = rand()%8;
 	
-	if(randnum){
+	if(randnum%2==1){
 		char buffer[50] = "./assets/image/trap/Fort_right.png";
 		pngPath = buffer;
 	}
@@ -54,12 +54,23 @@ Fort::Fort(){
 	
 	//hitbox
 	shape.reset();
-	if(randnum)
-		shape.reset(new Rectangle{DC->wall_rx, DC->window_height/2, DC->wall_rx + al_get_bitmap_width(img), DC->window_height/2 + al_get_bitmap_height(img)});
-	else
-		shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img), DC->window_height/2, DC->wall_lx, DC->window_height/2 + al_get_bitmap_height(img)});
-	//Rectangle:左上到右下的座標
+	switch(randnum){
+		case 0:shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img)*3/2, DC->window_height/2, DC->wall_lx-al_get_bitmap_width(img)/2, DC->window_height/2 + al_get_bitmap_height(img)});break;
+		case 1:shape.reset(new Rectangle{DC->wall_rx+al_get_bitmap_width(img)/2, DC->window_height/2, DC->wall_rx + al_get_bitmap_width(img)*3/2, DC->window_height/2 + al_get_bitmap_height(img)});break;
+		case 2:shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img)*3/2, 120-al_get_bitmap_width(img)/2, DC->wall_lx-al_get_bitmap_width(img)/2, 120+al_get_bitmap_width(img)/2});break;
+		case 3:shape.reset(new Rectangle{DC->wall_rx+al_get_bitmap_width(img)/2, 120-al_get_bitmap_width(img)/2, DC->wall_rx + al_get_bitmap_width(img)*3/2, 120+al_get_bitmap_width(img)/2});break;
+		case 4:shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img)*3/2, 390-al_get_bitmap_width(img)/2, DC->wall_lx-al_get_bitmap_width(img)/2, 390+al_get_bitmap_width(img)/2});break;
+		case 5:shape.reset(new Rectangle{DC->wall_rx+al_get_bitmap_width(img)/2, 390-al_get_bitmap_width(img)/2, DC->wall_rx + al_get_bitmap_width(img)*3/2, 390+al_get_bitmap_width(img)/2});break;
+		case 6:shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img)*3/2, 920-al_get_bitmap_width(img)/2, DC->wall_lx-al_get_bitmap_width(img)/2, 920+al_get_bitmap_width(img)/2});break;
+		case 7:shape.reset(new Rectangle{DC->wall_rx+al_get_bitmap_width(img)/2, 920-al_get_bitmap_width(img)/2, DC->wall_rx + al_get_bitmap_width(img)*3/2, 920+al_get_bitmap_width(img)/2});break;
+	}
 
+	/*if(randnum)
+		shape.reset(new Rectangle{DC->wall_rx+al_get_bitmap_width(img)/2, DC->window_height/2, DC->wall_rx + al_get_bitmap_width(img)*3/2, DC->window_height/2 + al_get_bitmap_height(img)});
+	else
+		shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img)*3/2, DC->window_height/2, DC->wall_lx-al_get_bitmap_width(img)/2, DC->window_height/2 + al_get_bitmap_height(img)});*/
+	//Rectangle:左上到右下的座標
+	attack_freq = 250 + rand()%101;
     counter = attack_freq;
 }
 
