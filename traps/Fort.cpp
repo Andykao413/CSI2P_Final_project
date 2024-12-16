@@ -32,7 +32,7 @@ Fort* Fort::createFort(){
 
 Fort::Fort(){
     srand(time(0));
-	int randnum = rand()%8;
+	int randnum = (rand()%19 + 17)%8;
 	
 	if(randnum%2==1){
 		char buffer[50] = "./assets/image/trap/Fort_right.png";

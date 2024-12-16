@@ -102,6 +102,12 @@ void OperationCenter::_update_fortbullet() {
 	std::vector<Fortbullet*> &fortbullets = DataCenter::get_instance()->fortbullets;
 	for(Fortbullet *fortbullet : fortbullets)
 		fortbullet->update();
+	for(size_t i = 0; i < fortbullets.size(); ++i) {
+		if(fortbullets[i]->shape->center_x() > DataCenter::get_instance()->window_width || fortbullets[i]->shape->center_x() < 0) {
+			fortbullets.erase(fortbullets.begin()+i);
+			--i;
+		}
+	}
 }
 
 void OperationCenter::_update_towerBullet() {
