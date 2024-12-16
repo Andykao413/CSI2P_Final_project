@@ -17,6 +17,7 @@ class Rabbit; //avoid cycle include
 class Carrot;
 class Iron;
 class TrapCenter;
+class Arrow;
 
 /**
  * @brief Stores generic global data and relatively small data structures.
@@ -102,6 +103,8 @@ public:
 	Plat *plat;
 
 	Iron *iron;
+
+	Arrow *arrow;
 	/**
 	 * @brief Raw list of Monster objects.
 	 * @see Monster
@@ -119,6 +122,8 @@ public:
 	std::vector<Bullet*> towerBullets;
 
 	std::vector<Iron*> irons;
+
+	std::vector<Arrow*> arrows;
 
 
 private:

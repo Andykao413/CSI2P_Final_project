@@ -14,6 +14,7 @@
 
 enum class TrapType {
     IRON,
+	Arrow,
 	TrapType_MAX
 };
 
@@ -29,7 +30,8 @@ public:
 private:
     int trap_num;
     int trap_time = 5;
-	
+	int lasttrap;
+	int same;
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include "../Carrot.h"
 #include "../TrapCenter.h"
 #include "../traps/Iron.h"
+#include "../traps/Arrow.h"
 #include <ctime>
 
 
@@ -74,6 +75,9 @@ DataCenter::~DataCenter() {
 		delete b;
 	}
 	for(Iron *&b : irons) {
+		delete b;
+	}
+	for(Arrow *&b : arrows) {
 		delete b;
 	}
 	delete rabbit;

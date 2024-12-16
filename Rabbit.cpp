@@ -34,7 +34,8 @@ void Rabbit::init(){
 	
 	//hitbox
 	shape.reset();
-	shape.reset(new Rectangle{DC->window_width/2., DC->window_height/2., DC->window_width/2 + al_get_bitmap_width(img)*0.5, DC->window_height/2 + al_get_bitmap_height(img)*0.5});
+	shape.reset(new Rectangle{DC->window_width/2., DC->window_height/2., DC->window_width/2 + al_get_bitmap_width(img)/3., DC->window_height/2 + al_get_bitmap_height(img)*0.5});
+	//shape.reset(new Rectangle{DC->window_width/2.0, DC->window_height/2.0, DC->window_width/2.0 + al_get_bitmap_width(img), DC->window_height/2.0 + al_get_bitmap_height(img)});
 	//Rectangle:左上到右下的座標
 
 }
