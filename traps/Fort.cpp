@@ -60,7 +60,7 @@ Fort::Fort(){
 		shape.reset(new Rectangle{DC->wall_lx-al_get_bitmap_width(img), DC->window_height/2, DC->wall_lx, DC->window_height/2 + al_get_bitmap_height(img)});
 	//Rectangle:左上到右下的座標
 
-    counter = 0;
+    counter = attack_freq;
 }
 
 bool Fort::attack() {
@@ -84,7 +84,12 @@ void Fort::draw(){
 }
 
 void Fort::update(){
-    //DataCenter *DC = DataCenter::get_instance();
-    //if(counter) counter--;
+    DataCenter *DC = DataCenter::get_instance();
+    if(counter) counter--;
+	else{
+		std::cout<<"shoot!"<<std::endl;
+		DC->fortbullets.emplace_back(create_bullet());
+		counter = attack_freq;
+	}
 }
 

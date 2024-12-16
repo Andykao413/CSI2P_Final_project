@@ -24,12 +24,12 @@ public:
     static Fort* createFort();
     Fort();
     virtual Fortbullet *create_bullet(){
-		const Point &p = Point(shape->center_x(), shape->center_y());
+		const Point &p = Point(shape->center_x(), shape->center_y()-37);
 		return new Fortbullet(p);
 	}
 
 private:
-    const int attack_freq = 100;
+    const int attack_freq = 300;
 	int counter;
     std::string pngPath;
 };

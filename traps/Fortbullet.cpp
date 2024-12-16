@@ -11,7 +11,7 @@ Fortbullet::Fortbullet(const Point &p) {
     pngPath = buffer;
 	ImageCenter *IC = ImageCenter::get_instance();
 	ALLEGRO_BITMAP *img = IC->get(pngPath);
-	double r = std::min(al_get_bitmap_width(img), al_get_bitmap_height(img)) * 0.8;
+	double r = std::min(al_get_bitmap_width(img), al_get_bitmap_height(img)) * 0.5;
 	shape.reset(new Circle{p.x, p.y, r});
 	if(p.x>DataCenter::get_instance()->window_width/2) vx = -10;
 	else vx = 10;
@@ -24,7 +24,7 @@ Fortbullet::Fortbullet(const Point &p) {
 void
 Fortbullet::update() {
 	DataCenter *DC = DataCenter::get_instance();
-	shape->update_center_y(shape->center_y()+vx);
+	shape->update_center_x(shape->center_x()+vx);
 }
 
 void

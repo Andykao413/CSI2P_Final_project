@@ -178,7 +178,7 @@ Game::game_update() {
 			static bool is_played = false; 
 			static ALLEGRO_SAMPLE_INSTANCE *instance = nullptr;
 			if(!is_played) {
-				instance = SC->play(game_start_sound_path, ALLEGRO_PLAYMODE_ONCE);
+				//instance = SC->play(game_start_sound_path, ALLEGRO_PLAYMODE_ONCE);
 				//instance = SC->play("", ALLEGRO_PLAYMODE_ONCE);
 				//DC->level->load_level(1);
 				is_played = true;
@@ -198,6 +198,7 @@ Game::game_update() {
 				debug_log("<Game> state: change to LEVEL\n");
 				state = STATE::LEVEL;
 			}
+			DC->player->score = -1;
 			break;
 		} case STATE::LEVEL: {
 
@@ -215,13 +216,15 @@ Game::game_update() {
 				//reset game
 				DC->irons = std::vector<Iron*>(0); 
 				DC->arrows = std::vector<Arrow*>(0); 
-				DC->wheels = std::vector<Wheel*>(0); 
+				DC->wheels = std::vector<Wheel*>(0);
+				DC->forts = std::vector<Fort*>(0);  
+				DC->fortbullets = std::vector<Fortbullet*>(0);  
 				DC->rabbit->init();
 				DC->plat->init();
 				DC->carrot->init();
 				DC->trapcenter->init();
 				DC->player->HP = 3;
-
+				total_time = std::difftime(std::time(nullptr), DC->start_time);
 				state = STATE::END;
 			}
 			break;
@@ -305,7 +308,15 @@ Game::game_draw() {
 		}
 	}else{
 		al_draw_bitmap(background_end, 0, 0, 0);
-	}
+		DataCenter *DC = DataCenter::get_instance();
+		FontCenter *FC = FontCenter::get_instance();
+		const int &game_field_length = DC->game_field_length;
+		const int &player_score = DC->player->score;
+		al_draw_textf(
+			FC->courier_new[FontSize::LARGE], al_map_rgb(0, 0, 0),
+			DC->window_width/2. - 300, DC->window_height/2.,
+			ALLEGRO_ALIGN_LEFT, "TOTAL TIME: %d     SCORE: %d",total_time ,player_score);
+		}
 	switch(state) {
 		case STATE::START: {
 		} case STATE::LEVEL: {

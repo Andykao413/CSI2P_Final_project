@@ -53,6 +53,7 @@ TrapCenter::update() {
         std::cout << "now second:" << now_time << "\n";
     }
     
+    
     if(now_time > 0 && now_time % trap_time==0 && trap_num < now_time/trap_time){
         srand(time(0));
         int rnum = rand()%int(TrapType::TrapType_MAX);

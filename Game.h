@@ -40,6 +40,7 @@ private:
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_EVENT_QUEUE *event_queue;
 	UI *ui;
+	int total_time;
 };
 
 #endif
