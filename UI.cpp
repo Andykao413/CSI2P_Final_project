@@ -20,7 +20,7 @@ constexpr int tower_img_top_padding = 30;
 
 void
 UI::init() {
-	DataCenter *DC = DataCenter::get_instance();
+	/*DataCenter *DC = DataCenter::get_instance();
 	ImageCenter *IC = ImageCenter::get_instance();
 	love = IC->get(love_img_path);
 	int tl_x = DC->game_field_length + tower_img_left_padding;
@@ -42,12 +42,12 @@ UI::init() {
 	}
 	debug_log("<UI> state: change to HALT\n");
 	state = STATE::HALT;
-	on_item = -1;
+	on_item = -1;*/
 }
 
 void
 UI::update() {
-	DataCenter *DC = DataCenter::get_instance();
+	/*DataCenter *DC = DataCenter::get_instance();
 	const Point &mouse = DC->mouse;
 
 	switch(state) {
@@ -122,28 +122,28 @@ UI::update() {
 			state = STATE::HALT;
 			break;
 		}
-	}
+	}*/
 }
 
 void
 UI::draw() {
 	DataCenter *DC = DataCenter::get_instance();
 	FontCenter *FC = FontCenter::get_instance();
-	const Point &mouse = DC->mouse;
-	// draw HP
-	const int &game_field_length = DC->game_field_length;
-	const int &player_HP = DC->player->HP;
+	//const Point &mouse = DC->mouse;
+	std::time_t end_time = std::time(nullptr); // 紀錄結束時間
+    int now_time = std::difftime(end_time, DC->start_time);
+	/*const int &player_HP = DC->player->HP;
 	int love_width = al_get_bitmap_width(love);
 	for(int i = 1; i <= player_HP; ++i) {
 		al_draw_bitmap(love, game_field_length - (love_width + love_img_padding) * i, love_img_padding, 0);
-	}
-	// draw coin
-	const int &player_coin = DC->player->coin;
+	}*/
+	// draw score
+	const int &player_score = DC->player->score;
 	al_draw_textf(
-		FC->courier_new[FontSize::MEDIUM], al_map_rgb(0, 0, 0),
-		game_field_length+love_img_padding, love_img_padding,
-		ALLEGRO_ALIGN_LEFT, "coin: %5d", player_coin);
-	// draw tower shop items
+		FC->courier_new[FontSize::LARGE], al_map_rgb(0, 0, 0),
+		DC->window_width/2 - 50, love_img_padding,
+		ALLEGRO_ALIGN_LEFT, "TIME: %d     SCORE: %d",now_time ,player_score);
+	/*// draw tower shop items
 	for(auto &[bitmap, p, price] : tower_items) {
 		int w = al_get_bitmap_width(bitmap);
 		int h = al_get_bitmap_height(bitmap);
@@ -193,5 +193,5 @@ UI::draw() {
 			al_draw_bitmap(bitmap, mouse.x - w / 2, mouse.y - h / 2, 0);
 			break;
 		}
-	}
+	}*/
 }

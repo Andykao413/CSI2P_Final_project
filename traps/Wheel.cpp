@@ -101,7 +101,8 @@ Wheel::Wheel(){
         ALGIF_ANIMATION *gif = GIFC->get(gifPath[state]);
         shape.reset();
 	    //shape.reset(new Rectangle{DC->wall_lx, DC->sky_y, DC->wall_lx +gif->width,  DC->sky_y + gif->height});
-        shape.reset(new Rectangle{DC->wall_lx, DC->sky_y, DC->wall_lx,  DC->sky_y + gif->height});
+        // shape.reset(new Rectangle{DC->wall_lx, DC->sky_y, DC->wall_lx,  DC->sky_y + gif->height});
+        shape.reset(new Circle{DC->wall_lx, DC->sky_y, gif->width-40});
         height = gif->height;
         width = gif->width;
     }else{
@@ -109,7 +110,8 @@ Wheel::Wheel(){
         ALGIF_ANIMATION *gif = GIFC->get(gifPath[state]);
         shape.reset();
 	    //shape.reset(new Rectangle{DC->wall_rx - gif->width, DC->sky_y, DC->wall_rx,  DC->sky_y + gif->height});
-        shape.reset(new Rectangle{DC->wall_rx , DC->sky_y, DC->wall_rx,  DC->sky_y + gif->height});
+        // shape.reset(new Rectangle{DC->wall_rx , DC->sky_y, DC->wall_rx,  DC->sky_y + gif->height});
+        shape.reset(new Circle{DC->wall_rx , DC->sky_y, gif->width-40});
         height = gif->height;
         width = gif->width;
     }
@@ -124,10 +126,29 @@ Wheel::Wheel(){
 void Wheel::draw(){
     GIFCenter *GIFC = GIFCenter::get_instance();
 	ALGIF_ANIMATION *gif = GIFC->get(gifPath[state]);
-	algif_draw_gif(
+
+    if(state==WheelState::RIGHT){
+        algif_draw_gif(
 		gif,
 		shape->center_x() - gif->width / 2,
 		shape->center_y() - gif->height / 2, 0); //左上角座標
+    }else if(state==WheelState::LEFT){
+        algif_draw_gif(
+		gif,
+		shape->center_x() - gif->width / 2,
+		shape->center_y() - gif->height / 2, 0); //左上角座標
+    }else{
+        algif_draw_gif(
+		gif,
+		shape->center_x() - gif->width / 2,
+		shape->center_y() - gif->height / 2, 0); //左上角座標
+    }
+
+
+	// algif_draw_gif(
+	// 	gif,
+	// 	shape->center_x() - gif->width / 2,
+	// 	shape->center_y() - gif->height / 2, 0); //左上角座標
 }
 
 void Wheel::update(){
@@ -141,7 +162,7 @@ void Wheel::update(){
             }
             if(shape->center_y() > DC->floor_y){
                 shape->update_center_x(DC->wall_lx+10);
-                shape->update_center_y(DC->floor_y + height/2 - 20);
+                shape->update_center_y(DC->floor_y + height/2-20);
                 speed_y = 0;
                 speed_x = speed;
                 state = WheelState::DOWN;
@@ -156,7 +177,7 @@ void Wheel::update(){
             }
             if(shape->center_y() > DC->floor_y){
                 shape->update_center_x(DC->wall_rx-10);
-                shape->update_center_y(DC->floor_y + height/2 - 20);
+                shape->update_center_y(DC->floor_y + height/2-20);
                 speed_y = 0;
                 speed_x = speed * -1;
                 state = WheelState::DOWN;

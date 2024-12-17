@@ -3,6 +3,8 @@
 #include "../monsters/Monster.h"
 #include "../traps/Iron.h"
 #include "../traps/Arrow.h"
+#include "../traps/Fort.h"
+#include "../traps/Fortbullet.h"
 #include "../towers/Tower.h"
 #include "../towers/Bullet.h"
 #include "../traps/Wheel.h"
@@ -39,7 +41,13 @@ void OperationCenter::update() {
 
 	_update_arrow_rabbit();
 
+	_update_fort();
+
+	_update_fortbullet();
+
 	_update_wheel_rabbit();
+
+	_update_rabbit_fortbullet();
 }
 
 void OperationCenter::_update_monster() {
@@ -84,6 +92,24 @@ void OperationCenter::_update_tower() {
 		tower->update();
 }
 
+void OperationCenter::_update_fort() {
+	std::vector<Fort*> &forts = DataCenter::get_instance()->forts;
+	for(Fort *fort : forts)
+		fort->update();
+}
+
+void OperationCenter::_update_fortbullet() {
+	std::vector<Fortbullet*> &fortbullets = DataCenter::get_instance()->fortbullets;
+	for(Fortbullet *fortbullet : fortbullets)
+		fortbullet->update();
+	for(size_t i = 0; i < fortbullets.size(); ++i) {
+		if(fortbullets[i]->shape->center_x() > DataCenter::get_instance()->window_width || fortbullets[i]->shape->center_x() < 0) {
+			fortbullets.erase(fortbullets.begin()+i);
+			--i;
+		}
+	}
+}
+
 void OperationCenter::_update_towerBullet() {
 	std::vector<Bullet*> &towerBullets = DataCenter::get_instance()->towerBullets;
 	for(Bullet *towerBullet : towerBullets)
@@ -123,10 +149,10 @@ void OperationCenter::_update_rabbit_carrot(){
 		player->score++;
 		player->HP++;
 		srand(time(0));
-		int newposid = rand()%9;
+		int newposid = rand()%carrot->posnum;
 		if(carrot->new_pos[newposid]==carrot->pos){
-			newposid++;
-			newposid%=3;
+			newposid+=5;
+			newposid%=carrot->posnum;
 		}
 		carrot->pos = carrot->new_pos[newposid];
 	}
@@ -139,6 +165,18 @@ void OperationCenter::_update_iron_rabbit() {
 	Rabbit *&rabbit = DC->rabbit;
 	for(size_t i = 0; i < irons.size(); ++i) {
 		if(irons[i]->shape->overlap(*(rabbit->shape))) {
+			player->HP = 0;
+		}
+	}
+}
+
+void OperationCenter::_update_rabbit_fortbullet() {
+	DataCenter *DC = DataCenter::get_instance();
+	std::vector<Fortbullet*> &fortbullets = DC->fortbullets;
+	Player *&player = DC->player;
+	Rabbit *&rabbit = DC->rabbit;
+	for(size_t i = 0; i < fortbullets.size(); ++i) {
+		if(fortbullets[i]->shape->overlap(*(rabbit->shape))) {
 			player->HP = 0;
 		}
 	}
@@ -200,7 +238,9 @@ void OperationCenter::draw() {
 	_draw_carrot();
 	_draw_iron();
 	_draw_arrow();
+	_draw_fort();
 	_draw_wheel();
+	_draw_fortbullet();
 }
 
 void OperationCenter::_draw_monster() {
@@ -247,4 +287,16 @@ void OperationCenter::_draw_towerBullet() {
 void OperationCenter::_draw_carrot() {
 	Carrot* carrot = DataCenter::get_instance()->carrot;
 	carrot->draw();
+}
+
+void OperationCenter::_draw_fort() {
+	std::vector<Fort*> &forts = DataCenter::get_instance()->forts;
+	for(Fort *fort : forts)
+		fort->draw();
+}
+
+void OperationCenter::_draw_fortbullet() {
+	std::vector<Fortbullet*> &fortbullets = DataCenter::get_instance()->fortbullets;
+	for(Fortbullet *fortbullet : fortbullets)
+		fortbullet->draw();
 }

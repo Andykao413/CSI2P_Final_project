@@ -1,6 +1,8 @@
 #ifndef FORT_H_INCLUDED //標頭檔保護
 #define FORT_H_INCLUDED
 #include "../Object.h"
+#include "Fortbullet.h"
+#include "../shapes/Point.h"
 #include <map>
 #include <string>
 #include <queue>
@@ -21,10 +23,13 @@ public:
     virtual bool attack();
     static Fort* createFort();
     Fort();
-
+    virtual Fortbullet *create_bullet(){
+		const Point &p = Point(shape->center_x(), shape->center_y()-37);
+		return new Fortbullet(p);
+	}
 
 private:
-    const int attack_freq = 100;
+    int attack_freq = 300;
 	int counter;
     std::string pngPath;
 };

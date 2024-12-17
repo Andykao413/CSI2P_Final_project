@@ -73,7 +73,7 @@ Iron::Iron(){
 	ImageCenter *IMG = ImageCenter::get_instance();
 	ALLEGRO_BITMAP *img = IMG->get(pngPath);
 	
-    std::cout << "create Iron \n";
+    //std::cout << "create Iron \n";
     // 使用當前時間初始化隨機數種子
     srand(time(0)); 
     // 生成 1 到 7 之間的隨機數
@@ -90,8 +90,8 @@ Iron::Iron(){
     if(randomNumber == 0){ speed_x = -speed; speed_y = speed;}
     else if(randomNumber == 1){ speed_x = 0; speed_y = speed;}
     else{speed_x = speed; speed_y = speed;}
-    std::cout << "create Iron finish\n";
-    std::cout << randomNumber <<","<< speed_x << "," << speed_y << "\n";
+    /*std::cout << "create Iron finish\n";
+    std::cout << randomNumber <<","<< speed_x << "," << speed_y << "\n";*/
 
 }
 

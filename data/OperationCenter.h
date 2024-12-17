@@ -36,6 +36,9 @@ private:
 	void _update_arrow_rabbit();
 	void _update_monster_player();
 	void _update_rabbit_plat();
+	void _update_rabbit_fortbullet();
+	void _update_fort();
+	void _update_fortbullet();
 
 	void _update_rabbit_carrot();
 	void _update_wheel_rabbit();
@@ -46,7 +49,9 @@ private:
 	void _draw_carrot();
 	void _draw_iron();
 	void _draw_arrow();
+	void _draw_fort();
 	void _draw_wheel();
+	void _draw_fortbullet();
 };
 
 #endif

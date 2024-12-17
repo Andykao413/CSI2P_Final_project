@@ -18,6 +18,8 @@ class Carrot;
 class Iron;
 class TrapCenter;
 class Arrow;
+class Fort;
+class Fortbullet;
 class Wheel;
 
 /**
@@ -103,9 +105,6 @@ public:
 
 	Plat *plat;
 
-	Iron *iron;
-
-	Arrow *arrow;
 	/**
 	 * @brief Raw list of Monster objects.
 	 * @see Monster
@@ -126,6 +125,9 @@ public:
 
 	std::vector<Arrow*> arrows;
 
+	std::vector<Fort*> forts;
+
+	std::vector<Fortbullet*> fortbullets;
 	std::vector<Wheel*> wheels;
 
 
