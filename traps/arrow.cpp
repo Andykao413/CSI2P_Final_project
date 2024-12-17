@@ -45,7 +45,7 @@ Arrow::Arrow(){
 	
     srand(time(0)); 
     // 生成 1 到 7 之間的隨機數
-    int randomNumber = rand() % 20 + 1; 
+    int randomNumber = rand() % 18 + 2; 
 	//hitbox
 	shape.reset();
 	shape.reset(new Rectangle{80*randomNumber,-al_get_bitmap_height(img),80*randomNumber+al_get_bitmap_width(img)/5,-al_get_bitmap_height(img)});
