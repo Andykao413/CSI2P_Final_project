@@ -66,7 +66,7 @@ TrapCenter::update() {
             else same++;
         }
         //以下random不同的case，依據case生出不同陷阱
-        rnum = 2;
+        //rnum = 2;
         switch(rnum){
             case(0):
                 DC->irons.emplace_back(Iron::createIron());
