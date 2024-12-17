@@ -1,5 +1,6 @@
 #include "OperationCenter.h"
 #include "DataCenter.h"
+#include "SoundCenter.h"
 #include "../monsters/Monster.h"
 #include "../traps/Iron.h"
 #include "../traps/Arrow.h"
@@ -142,10 +143,12 @@ void OperationCenter::_update_monster_towerBullet() {
 
 void OperationCenter::_update_rabbit_carrot(){
 	DataCenter *DC = DataCenter::get_instance();
+	SoundCenter *SC = SoundCenter::get_instance();
 	Rabbit* rabbit = DC->rabbit;
 	Carrot* carrot = DC->carrot;
 	Player *&player = DC->player;
 	if(rabbit->shape->overlap(*(carrot->shape))) {
+		SC->play("./assets/sound/carrot.mp3", ALLEGRO_PLAYMODE_ONCE);
 		player->score++;
 		player->HP++;
 		srand(time(0));
