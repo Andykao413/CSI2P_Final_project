@@ -148,7 +148,8 @@ void OperationCenter::_update_rabbit_carrot(){
 	Carrot* carrot = DC->carrot;
 	Player *&player = DC->player;
 	if(rabbit->shape->overlap(*(carrot->shape))) {
-		SC->play("./assets/sound/carrot.mp3", ALLEGRO_PLAYMODE_ONCE);
+		if(player->score>=0)
+			SC->play("./assets/sound/carrot.mp3", ALLEGRO_PLAYMODE_ONCE);
 		player->score++;
 		player->HP++;
 		srand(time(0));
